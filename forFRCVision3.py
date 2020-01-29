@@ -8,8 +8,8 @@ from networktables import NetworkTablesInstance
 import cv2
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,100,100])
-upper_hsv = np.array([30,255,255])
+lower_hsv = np.array([20,10,10])
+upper_hsv = np.array([80,255,255])
 #Define RGB Thresholds
 lower_rgb = np.array([68,154,0])
 upper_rgb = np.array([255,255,166])
