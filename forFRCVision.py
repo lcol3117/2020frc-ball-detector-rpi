@@ -9,12 +9,10 @@ import cv2
 
 
 def parseError(str, config_file):
-    """Report parse error."""
     print("config error in '" + config_file + "': " + str, file=sys.stderr)
 
 
 def read_config(config_file):
-    """Read configuration file."""
     team = -1
 
     # parse file
