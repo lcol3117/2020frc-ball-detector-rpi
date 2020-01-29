@@ -10,6 +10,9 @@ import cv2
 #Define HSV Thresholds
 lower_hsv = np.array([20,10,10])
 upper_hsv = np.array([95,100,100])
+#Define RGB Thresholds
+lower_rgb = np.array([200,180,0])
+upper_rgb = np.array([255,255,120])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
@@ -106,8 +109,10 @@ def main(config):
         _, frame = cvSink.grabFrame(img)
         #//vision code
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
+        rgb_frame_origt = cv2.inRange(rgb_frame, lower_rgb, upper_rgb)
         #Open to eliminate noise
         hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
@@ -143,7 +148,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(hsv_frame_origt)
+        output.putFrame(rgb_frame_origt)
 
 
 if __name__ == '__main__':
