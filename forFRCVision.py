@@ -77,7 +77,7 @@ class PBTXTParser:
 
 def main(config):
     team = read_config(config)
-    WIDTH, HEIGHT = 320, 240
+    WIDTH, HEIGHT = 160, 120
 
     print("Connecting to Network Tables")
     ntinst = NetworkTablesInstance.getDefault()
@@ -96,7 +96,7 @@ def main(config):
     img = np.zeros(shape=(HEIGHT, WIDTH, 3), dtype=np.uint8)
     output = cs.putVideo("MLOut", WIDTH, HEIGHT)
 
-   _, frame = cvSink.grabFrame(img)
+    _, frame = cvSink.grabFrame(img)
     //vision code
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     #Threshold HSV Colorspace (Only allow yellow ball color)
@@ -109,7 +109,7 @@ def main(config):
     hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
     #EDT image segmentation
     edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_L2, 5)
-            edt_frame = cv2.inRange(edt_frame, 5, 255)
+    edt_frame = cv2.inRange(edt_frame, 5, 255)
     edt_frame = cv2.erode(edt_frame, edt_kernel)
     edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
     #Hough Circle Detection
@@ -122,21 +122,17 @@ def main(config):
         for (x, y, r) in circles:
             if r >= largest_radius:
                 largest_center[0], largest_center[1], largest_radius = x, y, r
-    try:
         print(str(largest_center))
-    except:
-        pass
-            output.putFrame(frame)
-
-        else:
-            print('No object detected!')
-        output.putFrame(img)
-       tx_entry.setInt(largest_center[0])
-       ty_entry.setInt(largest_center[1])
-       tr_entry.setInt(largest_radius)
-        print("FPS: {:.1f}".format(1 / (time() - start)))
-
-        start = time()
+        tx_entry.setInt(largest_center[0])
+        ty_entry.setInt(largest_center[1])
+        tr_entry.setInt(largest_radius)
+    else:
+        print("No Power Cells in this galaxy!")
+        tx_entry.setInt(-1)
+        ty_entry.setInt(-1)
+        tr_entry.setInt(-1)
+    print("FPS: {:.1f}".format(1 / (time() - start)))
+    start = time()
 
 
 if __name__ == '__main__':
