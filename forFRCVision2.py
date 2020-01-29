@@ -129,14 +129,14 @@ def main(config):
             if r >= largest_radius:
                 largest_center[0], largest_center[1], largest_radius = x, y, r
         print(str(largest_center))
-        tx_entry.setInt(largest_center[0])
-        ty_entry.setInt(largest_center[1])
-        tr_entry.setInt(largest_radius)
+        tx_entry.setDouble(largest_center[0])
+        ty_entry.setDouble(largest_center[1])
+        tr_entry.setDouble(largest_radius)
     else:
         print("No Power Cells in this galaxy!")
-        tx_entry.setInt(-1)
-        ty_entry.setInt(-1)
-        tr_entry.setInt(-1)
+        tx_entry.setDouble(-1)
+        ty_entry.setDouble(-1)
+        tr_entry.setDouble(-1)
     print("FPS: {:.1f}".format(1 / (time() - start)))
     start = time()
 
