@@ -117,8 +117,8 @@ def main(config):
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
         #Open to eliminate noise
-        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 3)
-        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 3)
+        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 5)
+        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 5)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
