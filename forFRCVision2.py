@@ -137,7 +137,10 @@ def main(config):
         tx_entry.setDouble(-1)
         ty_entry.setDouble(-1)
         ta_entry.setDouble(-1)
-    print("FPS: {:.1f}".format(1 / (time() - start)))
+    try: 
+        print("FPS: {:.1f}".format(1 / (time() - start)))
+    except:
+        print("Unable to fetch FPS. (But that was our only hope!)")
     start = time()
 
 
