@@ -131,12 +131,12 @@ def main(config):
         print(str(largest_center))
         tx_entry.setDouble(largest_center[0])
         ty_entry.setDouble(largest_center[1])
-        tr_entry.setDouble(largest_radius)
+        ta_entry.setDouble(largest_radius)
     else:
         print("No Power Cells in this galaxy!")
         tx_entry.setDouble(-1)
         ty_entry.setDouble(-1)
-        tr_entry.setDouble(-1)
+        ta_entry.setDouble(-1)
     print("FPS: {:.1f}".format(1 / (time() - start)))
     start = time()
 
