@@ -7,6 +7,14 @@ from cscore import CameraServer, VideoSource, UsbCamera, MjpegServer
 from networktables import NetworkTablesInstance
 import cv2
 
+#Define HSV Thresholds
+lower_hsv = np.array([37,61,53])
+upper_hsv = nump.array([64,100,100])
+#Define morphological operation kernels
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
+edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
 def parseError(str, config_file):
     print("config error in '" + config_file + "': " + str, file=sys.stderr)
