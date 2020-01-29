@@ -151,7 +151,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(hsv_frame_origt)
+        output.putFrame(hsv_frame)
 
 
 if __name__ == '__main__':
