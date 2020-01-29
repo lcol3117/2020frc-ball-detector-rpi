@@ -107,9 +107,9 @@ def main(config):
         #//vision code
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         #Threshold HSV Colorspace (Only allow yellow ball color)
-        hsv_frame = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
+        hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
         #Open to eliminate noise
-        hsv_frame = cv2.erode(hsv_frame, anti_noise_kernel)
+        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
@@ -143,7 +143,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(hsv_frame)
+        output.putFrame(hsv_frame_origt)
 
 
 if __name__ == '__main__':
