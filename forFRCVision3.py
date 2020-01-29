@@ -112,7 +112,7 @@ def main(config):
     while True: 
         _, frame = cvSink.grabFrame(img)
         #vision code
-        lab_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+        lab_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2Lab)
         #Threshold HSV Colorspace (Only allow yellow ball color)
         lab_frame_origt = cv2.inRange(lab_frame, lower_lab, upper_lab)
         #Open to eliminate noise
