@@ -101,50 +101,50 @@ def main(config):
     cvSink = cs.getVideo()
     img = np.zeros(shape=(HEIGHT, WIDTH, 3), dtype=np.uint8)
     output = cs.putVideo("MLOut", WIDTH, HEIGHT)
-
-    _, frame = cvSink.grabFrame(img)
-    #//vision code
-    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    #Threshold HSV Colorspace (Only allow yellow ball color)
-    hsv_frame = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
-    #Open to eliminate noise
-    hsv_frame = cv2.erode(hsv_frame, anti_noise_kernel, iterations = 2)
-    hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
-    #Close to fill in the logo
-    hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-    hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
-    #EDT image segmentation
-    edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_L2, 5)
-    edt_frame = cv2.inRange(edt_frame, 8, 255)
-    edt_frame = cv2.erode(edt_frame, edt_kernel)
-    edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
-    #Hough Circle Detection
-    circles_out = cv2.HoughCircles(edt_frame, cv2.HOUGH_GRADIENT, 1.2, 40)
-    #Find largest circle if circles exist
-    if circles_out is not None:
-        circles = np.round(circles[0, :]).astype("int")
-        largest_center = [0,0]
-        largest_radius = 0
-        for (x, y, r) in circles:
-            if r >= largest_radius:
-                largest_center[0], largest_center[1], largest_radius = x, y, r
-        print(str(largest_center))
-        tx_entry.setDouble(largest_center[0])
-        ty_entry.setDouble(largest_center[1])
-        ta_entry.setDouble(largest_radius)
-    else:
-        print("No Power Cells in this galaxy!")
-        tx_entry.setDouble(-1)
-        ty_entry.setDouble(-1)
-        ta_entry.setDouble(-1)
-    try: 
-        print("FPS: {:.1f}".format(1 / (time() - start)))
-    except:
-        print("Unable to fetch FPS. (But that was our only hope!)")
-    start = time()
+    
+    while True: 
+        _, frame = cvSink.grabFrame(img)
+        #//vision code
+        hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        #Threshold HSV Colorspace (Only allow yellow ball color)
+        hsv_frame = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
+        #Open to eliminate noise
+        hsv_frame = cv2.erode(hsv_frame, anti_noise_kernel, iterations = 2)
+        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
+        #Close to fill in the logo
+        hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
+        hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
+        #EDT image segmentation
+        edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_L2, 5)
+        edt_frame = cv2.inRange(edt_frame, 8, 255)
+        edt_frame = cv2.erode(edt_frame, edt_kernel)
+        edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
+        #Hough Circle Detection
+        circles_out = cv2.HoughCircles(edt_frame, cv2.HOUGH_GRADIENT, 1.2, 40)
+        #Find largest circle if circles exist
+        if circles_out is not None:
+            circles = np.round(circles[0, :]).astype("int")
+            largest_center = [0,0]
+            largest_radius = 0
+            for (x, y, r) in circles:
+                if r >= largest_radius:
+                    largest_center[0], largest_center[1], largest_radius = x, y, r
+            print(str(largest_center))
+            tx_entry.setDouble(largest_center[0])
+            ty_entry.setDouble(largest_center[1])
+            ta_entry.setDouble(largest_radius)
+        else:
+            print("No Power Cells in this galaxy!")
+            tx_entry.setDouble(-1)
+            ty_entry.setDouble(-1)
+            ta_entry.setDouble(-1)
+        try: 
+            print("FPS: {:.1f}".format(1 / (time() - start)))
+        except:
+            print("Unable to fetch FPS. (But that was our only hope!)")
+        start = time()
 
 
 if __name__ == '__main__':
     config_file = "/boot/frc.json"
-    while True: 
-        main(config_file)
+    main(config_file)
