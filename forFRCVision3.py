@@ -11,7 +11,7 @@ import cv2
 lower_hsv = np.array([20,10,10])
 upper_hsv = np.array([95,100,100])
 #Define RGB Thresholds
-lower_rgb = np.array([132,154,0])
+lower_rgb = np.array([68,154,0])
 upper_rgb = np.array([255,255,166])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
@@ -148,7 +148,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(rgb_frame_origt)
+        output.putFrame(hsv_frame_origt)
 
 
 if __name__ == '__main__':
