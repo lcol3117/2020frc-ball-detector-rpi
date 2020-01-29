@@ -11,8 +11,8 @@ import cv2
 lower_hsv = np.array([20,10,10])
 upper_hsv = np.array([95,100,100])
 #Define RGB Thresholds
-lower_rgb = np.array([200,180,0])
-upper_rgb = np.array([255,255,120])
+lower_rgb = np.array([132,154,0])
+upper_rgb = np.array([255,255,166])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
