@@ -8,8 +8,8 @@ from networktables import NetworkTablesInstance
 import cv2
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,10,10])
-upper_hsv = np.array([95,100,100])
+lower_hsv = np.array([20,100,100])
+upper_hsv = np.array([30,255,255])
 #Define RGB Thresholds
 lower_rgb = np.array([68,154,0])
 upper_rgb = np.array([255,255,166])
@@ -112,12 +112,12 @@ def main(config):
     while True: 
         _, frame = cvSink.grabFrame(img)
         #vision code
-        lab_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2Lab)
-        print(lab_frame[80,60])
+        hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        print(hsv_frame[80,60])
         #Threshold HSV Colorspace (Only allow yellow ball color)
-        lab_frame_origt = cv2.inRange(lab_frame, lower_lab, upper_lab)
+        hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
         #Open to eliminate noise
-        hsv_frame = cv2.erode(lab_frame_origt, anti_noise_kernel)
+        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
@@ -151,7 +151,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(lab_frame_origt)
+        output.putFrame(hsv_frame_origt)
 
 
 if __name__ == '__main__':
