@@ -8,8 +8,8 @@ from networktables import NetworkTablesInstance
 import cv2
 
 #Define HSV Thresholds
-lower_hsv = np.array([37,47,52])
-upper_hsv = np.array([70,100,100])
+lower_hsv = np.array([20,10,10])
+upper_hsv = np.array([80,100,100])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
