@@ -146,4 +146,5 @@ def main(config):
 
 if __name__ == '__main__':
     config_file = "/boot/frc.json"
-    main(config_file)
+    while True: 
+        main(config_file)
