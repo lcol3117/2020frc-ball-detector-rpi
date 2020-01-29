@@ -13,6 +13,10 @@ upper_hsv = np.array([95,100,100])
 #Define RGB Thresholds
 lower_rgb = np.array([68,154,0])
 upper_rgb = np.array([255,255,166])
+#Define LAB Thresholds
+labt = (55, 100, -128, 13, 22, 127) #LAB
+lower_lab = np.array([labt[0],labt[2],labt[4]])
+upper_lab = np.array([labt[1],labt[3],labt[5]])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
