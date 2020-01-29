@@ -115,12 +115,12 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
         #EDT image segmentation
-        edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_L2, 5)
-        edt_frame = cv2.inRange(edt_frame, 8, 255)
-        edt_frame = cv2.erode(edt_frame, edt_kernel)
-        edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
+        #edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_L2, 5)
+        #edt_frame = cv2.inRange(edt_frame, 8, 255)
+        #edt_frame = cv2.erode(edt_frame, edt_kernel)
+        #edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
         #Hough Circle Detection
-        circles_out = cv2.HoughCircles(edt_frame, cv2.HOUGH_GRADIENT, 1.2, 40)
+        circles_out = cv2.HoughCircles(hsv_frame, cv2.HOUGH_GRADIENT, 1.2, 40)
         #Find largest circle if circles exist
         if circles_out is not None:
             circles = np.round(circles[0, :]).astype("int")
