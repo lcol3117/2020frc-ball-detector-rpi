@@ -95,7 +95,7 @@ def main(config):
     output = cs.putVideo("MLOut", WIDTH, HEIGHT)
 
     _, frame = cvSink.grabFrame(img)
-    //vision code
+    #//vision code
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     #Threshold HSV Colorspace (Only allow yellow ball color)
     hsv_frame = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
