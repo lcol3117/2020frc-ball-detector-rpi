@@ -123,7 +123,7 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
         #EDT image segmentation
-        edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_C)
+        edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_C, 3)
         #edt_frame = cv2.inRange(edt_frame, 8, 255)
         #edt_frame = cv2.erode(edt_frame, edt_kernel)
         #edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
