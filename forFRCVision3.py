@@ -9,7 +9,6 @@ import cv2
 from skimage.feature import peak_local_max
 from skimage.morphology import watershed
 from scipy import ndimage
-import argparse
 import imutils
 
 #Define HSV Thresholds
