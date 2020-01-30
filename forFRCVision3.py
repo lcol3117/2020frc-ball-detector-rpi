@@ -172,7 +172,7 @@ def main(config):
             cv2.putText(imageo, "#{}".format(label), (int(x) - 10, int(y)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
             #Find largest circle if circles exist
-            if lgtr !== -1:
+            if lgtr != -1:
                 print(str([lgtx,lgty,lgtr]))
                 tx_entry.setDouble(lgtx)
                 ty_entry.setDouble(lgty)
