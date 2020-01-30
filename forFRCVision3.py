@@ -6,6 +6,11 @@ from PIL import Image
 from cscore import CameraServer, VideoSource, UsbCamera, MjpegServer
 from networktables import NetworkTablesInstance
 import cv2
+from skimage.feature import peak_local_max
+from skimage.morphology import watershed
+from scipy import ndimage
+import argparse
+import imutils
 
 #Define HSV Thresholds
 lower_hsv = np.array([20,56,63])
@@ -121,37 +126,61 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 5)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-        hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
-        #EDT image segmentation
-        edt_frame = cv2.distanceTransform(hsv_frame, cv2.DIST_C, 3)
-        #edt_frame = cv2.inRange(edt_frame, 8, 255)
-        #edt_frame = cv2.erode(edt_frame, edt_kernel)
-        #edt_frame = cv2.dilate(edt_frame, circle_improvement_kernel)
-        #Hough Circle Detection
-        circles_out = cv2.HoughCircles(hsv_frame, cv2.HOUGH_GRADIENT, 1.2, 40)
-        #Find largest circle if circles exist
-        if circles_out is not None:
-            circles = np.round(circles[0, :]).astype("int")
-            largest_center = [0,0]
-            largest_radius = 0
-            for (x, y, r) in circles:
-                if r >= largest_radius:
-                    largest_center[0], largest_center[1], largest_radius = x, y, r
-            print(str(largest_center))
-            tx_entry.setDouble(largest_center[0])
-            ty_entry.setDouble(largest_center[1])
-            ta_entry.setDouble(largest_radius)
-        else:
-            print("No Power Cells in this galaxy!")
-            tx_entry.setDouble(-1)
-            ty_entry.setDouble(-1)
-            ta_entry.setDouble(-1)
-        try: 
-            print("FPS: {:.1f}".format(1 / (time() - start)))
-        except:
-            print("Unable to fetch FPS. (But that was our only hope!)")
-        start = time()
-        output.putFrame(edt_frame)
+        imageo = cv2.erode(hsv_frame, anti_logo_kernel)
+        #Watershed image segmentation
+        shifted = cv2.pyrMeanShiftFiltering(imageo, 21, 51)
+        # compute the exact Euclidean distance from every binary
+        # pixel to the nearest zero pixel, then find peaks in this
+        # distance map
+        D = ndimage.distance_transform_edt(thresh)
+        localMax = peak_local_max(D, indices=False, min_distance=20,
+            labels=thresh)
+
+        # perform a connected component analysis on the local peaks,
+        # using 8-connectivity, then appy the Watershed algorithm
+        markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
+        labels = watershed(-D, markers, mask=thresh)
+        print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
+
+        # loop over the unique labels returned by the Watershed
+        # algorithm
+        for label in np.unique(labels):
+            # if the label is zero, we are examining the 'background'
+            # so simply ignore it
+            if label == 0:
+                continue
+
+            # otherwise, allocate memory for the label region and draw
+            # it on the mask
+            mask = np.zeros(gray.shape, dtype="uint8")
+            mask[labels == label] = 255
+
+            # detect contours in the mask and grab the largest one
+            cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+                cv2.CHAIN_APPROX_SIMPLE)[-2]
+            c = max(cnts, key=cv2.contourArea)
+
+            # draw a circle enclosing the object
+            ((x, y), r) = cv2.minEnclosingCircle(c)
+            cv2.circle(imageo, (int(x), int(y)), int(r), (0, 255, 0), 2)
+            cv2.putText(imageo, "#{}".format(label), (int(x) - 10, int(y)),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            #Find largest circle if circles exist
+            #if circles_out is not None:
+                #tx_entry.setDouble(largest_center[0])
+                #ty_entry.setDouble(largest_center[1])
+                #ta_entry.setDouble(largest_radius)
+            #else:
+                #print("No Power Cells in this galaxy!")
+                #tx_entry.setDouble(-1)
+                #ty_entry.setDouble(-1)
+                #ta_entry.setDouble(-1)
+            try: 
+                print("FPS: {:.1f}".format(1 / (time() - start)))
+            except:
+                print("Unable to fetch FPS. (But that was our only hope!)")
+            start = time()
+            output.putFrame(imageo)
 
 
 if __name__ == '__main__':
