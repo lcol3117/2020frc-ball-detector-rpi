@@ -140,6 +140,9 @@ def main(config):
         markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
         labels = watershed(-D, markers, mask=thresh)
         print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
+        
+        # allocate ram for the largest circle values
+        lgtx, lgty, lgtr = -1, -1, -1
 
         # loop over the unique labels returned by the Watershed
         # algorithm
@@ -161,19 +164,24 @@ def main(config):
 
             # draw a circle enclosing the object
             ((x, y), r) = cv2.minEnclosingCircle(c)
+            #Select the new largest circle
+            if r>lgtr:
+                lgtx, lgty, lgtr = x, y, r
+
             cv2.circle(imageo, (int(x), int(y)), int(r), (0, 255, 0), 2)
             cv2.putText(imageo, "#{}".format(label), (int(x) - 10, int(y)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
             #Find largest circle if circles exist
-            #if circles_out is not None:
-                #tx_entry.setDouble(largest_center[0])
-                #ty_entry.setDouble(largest_center[1])
-                #ta_entry.setDouble(largest_radius)
-            #else:
-                #print("No Power Cells in this galaxy!")
-                #tx_entry.setDouble(-1)
-                #ty_entry.setDouble(-1)
-                #ta_entry.setDouble(-1)
+            if lgtr !== -1:
+                print(str([lgtx,lgty,lgtr]))
+                tx_entry.setDouble(lgtx)
+                ty_entry.setDouble(lgty)
+                ta_entry.setDouble(lgtr)
+            else:
+                print("No Power Cells in this galaxy!")
+                tx_entry.setDouble(-1)
+                ty_entry.setDouble(-1)
+                ta_entry.setDouble(-1)
             try: 
                 print("FPS: {:.1f}".format(1 / (time() - start)))
             except:
