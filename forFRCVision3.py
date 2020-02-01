@@ -115,7 +115,6 @@ def main(config):
     
     while True: 
         _, frame = cvSink.grabFrame(img)
-        #vision code
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         print(hsv_frame[80,60])
         #Threshold HSV Colorspace (Only allow yellow ball color)
@@ -125,20 +124,22 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 5)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-        imageo = cv2.erode(hsv_frame, anti_logo_kernel)
+        imageog = cv2.erode(hsv_frame, anti_logo_kernel)
+        cv2.imshow("Thresh",imageog)
+        imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
         shifted = cv2.pyrMeanShiftFiltering(imageo, 21, 51)
         # compute the exact Euclidean distance from every binary
         # pixel to the nearest zero pixel, then find peaks in this
         # distance map
-        D = ndimage.distance_transform_edt(thresh)
+        D = ndimage.distance_transform_edt(imageog)
         localMax = peak_local_max(D, indices=False, min_distance=20,
-            labels=thresh)
+            labels=imageog)
 
         # perform a connected component analysis on the local peaks,
         # using 8-connectivity, then appy the Watershed algorithm
         markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
-        labels = watershed(-D, markers, mask=thresh)
+        labels = watershed(-D, markers, mask=imageog)
         print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
         
         # allocate ram for the largest circle values
@@ -154,7 +155,7 @@ def main(config):
 
             # otherwise, allocate memory for the label region and draw
             # it on the mask
-            mask = np.zeros(gray.shape, dtype="uint8")
+            mask = np.zeros(imageog.shape, dtype="uint8")
             mask[labels == label] = 255
 
             # detect contours in the mask and grab the largest one
