@@ -3,8 +3,6 @@ from time import time
 import json
 import sys
 from PIL import Image
-from cscore import CameraServer, VideoSource, UsbCamera, MjpegServer
-from networktables import NetworkTablesInstance
 import cv2
 from skimage.feature import peak_local_max
 from skimage.morphology import watershed
@@ -29,7 +27,6 @@ circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 from imutils.video import VideoStream
 #Initiate capture
 cap = cv2.VideoCapture(0)
-cap.start()
 while True:
         #vision code
         _, frame = cap.read() #Read the capture
@@ -42,20 +39,22 @@ while True:
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 5)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-        imageo = cv2.erode(hsv_frame, anti_logo_kernel)
+        imageog = cv2.erode(hsv_frame, anti_logo_kernel)
+        cv2.imshow("Thresh",imageog)
+        imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
         shifted = cv2.pyrMeanShiftFiltering(imageo, 21, 51)
         # compute the exact Euclidean distance from every binary
         # pixel to the nearest zero pixel, then find peaks in this
         # distance map
-        D = ndimage.distance_transform_edt(thresh)
+        D = ndimage.distance_transform_edt(imageog)
         localMax = peak_local_max(D, indices=False, min_distance=20,
-            labels=thresh)
+            labels=imageog)
 
         # perform a connected component analysis on the local peaks,
         # using 8-connectivity, then appy the Watershed algorithm
         markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
-        labels = watershed(-D, markers, mask=thresh)
+        labels = watershed(-D, markers, mask=imageog)
         print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
         
         # allocate ram for the largest circle values
@@ -71,7 +70,7 @@ while True:
 
             # otherwise, allocate memory for the label region and draw
             # it on the mask
-            mask = np.zeros(gray.shape, dtype="uint8")
+            mask = np.zeros(imageog.shape, dtype="uint8")
             mask[labels == label] = 255
 
             # detect contours in the mask and grab the largest one
@@ -98,3 +97,5 @@ while True:
             except:
                 print("Unable to fetch FPS. (But that was our only hope!)")
             start = time()
+
+
