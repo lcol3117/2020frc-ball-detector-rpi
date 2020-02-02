@@ -103,7 +103,7 @@ def main(config):
     """Format of these entries found in WPILib documentation."""
     tx_entry= ntinst.getTable("FRCvisionpc").getEntry("pi_tx")
     ty_entry= ntinst.getTable("FRCvisionpc").getEntry("pi_ty")
-    ta_entry= ntinst.getTable("FRcVisionpc").getEntry("pi_ta")
+    ta_entry= ntinst.getTable("FRCVisionpc").getEntry("pi_ta")
 
     print("Starting camera server")
     cs = CameraServer.getInstance()
