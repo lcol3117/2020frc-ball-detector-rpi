@@ -22,10 +22,10 @@ labt = (55, 100, -128, 13, 22, 127) #LAB BAD
 lower_lab = np.array([150,100,170])
 upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
-anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
-anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
-edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
+anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
+//edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+//circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
 def parseError(str, config_file):
     print("config error in '" + config_file + "': " + str, file=sys.stderr)
@@ -120,8 +120,8 @@ def main(config):
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
         #Open to eliminate noise
-        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 5)
-        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 5)
+        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 2)
+        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         imageog = cv2.erode(hsv_frame, anti_logo_kernel)
@@ -170,9 +170,7 @@ def main(config):
             if r>lgtr:
                 lgtx, lgty, lgtr = x, y, r
 
-            cv2.circle(imageo, (int(x), int(y)), int(r), (0, 255, 0), 2)
-            cv2.putText(imageo, "#{}".format(label), (int(x) - 10, int(y)),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            cv2.drawMarker(imageo, (int(x), int(y)), (0, 255, 0), markerType=cv2.MARKER_CROSS)
         #Find largest circle if circles exist
         if lgtr != -1:
             print(str([lgtx,lgty,lgtr]))
