@@ -125,6 +125,7 @@ def main(config):
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         imageog = cv2.erode(hsv_frame, anti_logo_kernel)
+        imageogr = cv2.resize(imageog, (60,45))
         cv2.imshow("Thresh",imageog)
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
@@ -134,7 +135,7 @@ def main(config):
         # distance map
         D = ndimage.distance_transform_edt(imageog)
         localMax = peak_local_max(D, indices=False, min_distance=20,
-            labels=imageog)
+            labels=imageogr)
 
         # perform a connected component analysis on the local peaks,
         # using 8-connectivity, then appy the Watershed algorithm
@@ -172,23 +173,23 @@ def main(config):
             cv2.circle(imageo, (int(x), int(y)), int(r), (0, 255, 0), 2)
             cv2.putText(imageo, "#{}".format(label), (int(x) - 10, int(y)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-            #Find largest circle if circles exist
-            if lgtr != -1:
-                print(str([lgtx,lgty,lgtr]))
-                tx_entry.setDouble(lgtx)
-                ty_entry.setDouble(lgty)
-                ta_entry.setDouble(lgtr)
-            else:
-                print("No Power Cells in this galaxy!")
-                tx_entry.setDouble(-1)
-                ty_entry.setDouble(-1)
-                ta_entry.setDouble(-1)
-            try: 
-                print("FPS: {:.1f}".format(1 / (time() - start)))
-            except:
-                print("Unable to fetch FPS. (But that was our only hope!)")
-            start = time()
-            output.putFrame(imageo)
+        #Find largest circle if circles exist
+        if lgtr != -1:
+            print(str([lgtx,lgty,lgtr]))
+            tx_entry.setDouble(lgtx)
+            ty_entry.setDouble(lgty)
+            ta_entry.setDouble(lgtr)
+        else:
+            print("No Power Cells in this galaxy!")
+            tx_entry.setDouble(-1)
+            ty_entry.setDouble(-1)
+            ta_entry.setDouble(-1)
+        try: 
+            print("FPS: {:.1f}".format(1 / (time() - start)))
+        except:
+            print("Unable to fetch FPS. (But that was our only hope!)")
+        start = time()
+        output.putFrame(imageo)
 
 
 if __name__ == '__main__':
