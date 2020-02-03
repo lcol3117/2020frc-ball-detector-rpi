@@ -156,7 +156,7 @@ def main(config):
         # distance map
         D = ndimage.distance_transform_edt(imageog)
         Dfm = ndimage.distance_transform_edt(imagefm)
-        localMax = peak_local_max(Dfm, indices=False, min_distance=8,
+        localMax = peak_local_max(Dfm, indices=False, min_distance=20,
             labels=imagefm)
 
         # perform a connected component analysis on the local peaks,
