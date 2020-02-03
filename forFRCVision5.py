@@ -156,7 +156,12 @@ def main(config):
         # distance map
         D = ndimage.distance_transform_edt(imageog)
         Dfm = ndimage.distance_transform_edt(imagefm)
-        localMax = peak_local_max(Dfm, indices=False, min_distance=20,
+        #calculate mindist
+        if cv2.countNonZero(imagefm)>=(120*160)/4:
+            idealmindist=40
+        else:
+            idealmindist=20
+        localMax = peak_local_max(Dfm, indices=False, min_distance=idealmindist,
             labels=imagefm)
 
         # perform a connected component analysis on the local peaks,
