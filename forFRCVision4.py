@@ -136,8 +136,8 @@ def main(config):
         hsv_frame = cv2.erode(hsv_frame, anti_noise_kernel)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
         #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
-        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel, iterations = 2)
-        hsv_frame = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel, iterations = 2)
+        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel)
+        hsv_frame = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel)
         #Open to remove speckles
         hsv_frame = cv2.erode(hsv_frame, final_anti_noise_kernel, iterations = 2)
         hsv_frame = cv2.dilate(hsv_frame, final_anti_noise_kernel, iterations = 2)
