@@ -25,8 +25,10 @@ labt = (55, 100, -128, 13, 22, 127) #LAB BAD
 lower_lab = np.array([150,100,170])
 upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
-anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
+anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (7,7))
+final_anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -127,7 +129,17 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-        imageog = cv2.erode(hsv_frame, anti_logo_kernel)
+        hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
+        #Open to remove additional noise
+        hsv_frame = cv2.erode(hsv_frame, anti_noise_kernel)
+        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
+        #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
+        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel, iterations = 2)
+        hsv_frame = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel, iterations = 2)
+        #Open to remove speckles
+        hsv_frame = cv2.erode(hsv_frame, final_anti_noise_kernel, iterations = 2)
+        imageog = cv2.dilate(hsv_frame, final_anti_noise_kernel, iterations = 2)
+        #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
         shifted = cv2.pyrMeanShiftFiltering(imageo, 21, 51)
