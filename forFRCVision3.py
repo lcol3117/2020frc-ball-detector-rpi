@@ -136,7 +136,7 @@ def main(config):
         # distance map
         D = ndimage.distance_transform_edt(imageog)
         localMax = peak_local_max(D, indices=False, min_distance=20,
-            labels=imageogr)
+            labels=imageog)
 
         # perform a connected component analysis on the local peaks,
         # using 8-connectivity, then appy the Watershed algorithm
