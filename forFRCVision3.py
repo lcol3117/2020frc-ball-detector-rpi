@@ -155,7 +155,7 @@ def main(config):
         # pixel to the nearest zero pixel, then find peaks in this
         # distance map
         D = ndimage.distance_transform_edt(imageog)
-        Dfm = ndimage.distance_tranform_edt(imagefm)
+        Dfm = ndimage.distance_transform_edt(imagefm)
         localMax = peak_local_max(Dfm, indices=False, min_distance=8,
             labels=imagefm)
 
