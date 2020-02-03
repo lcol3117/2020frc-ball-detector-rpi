@@ -29,7 +29,7 @@ anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (7,7))
 final_anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
-final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
