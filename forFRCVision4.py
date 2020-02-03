@@ -30,7 +30,7 @@ anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
 final_anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
-final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (23,23))
+final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,19))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -145,8 +145,9 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, final_desegmentation_kernel)
         hsv_frame = cv2.erode(hsv_frame, final_desegmentation_kernel)
         #Open to allow watershed to function
-        imagefm = cv2.erode(hsv_frame, final_open_kernel, iterations = 2)
-        imageog = cv2.dilate(imagefm, final_open_kernel)
+        hsv_frame = cv2.erode(hsv_frame, final_open_kernel, iterations = 2)
+        imageog = cv2.dilate(hsv_frame, final_open_kernel)
+        imagefm = cv2.erode(imageog, final_open_kernel)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
