@@ -27,7 +27,7 @@ upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
-anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
+anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (9,9))
 final_anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
