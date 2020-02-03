@@ -27,8 +27,8 @@ upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
-//edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-//circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+#edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+#circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
 def parseError(str, config_file):
     print("config error in '" + config_file + "': " + str, file=sys.stderr)
