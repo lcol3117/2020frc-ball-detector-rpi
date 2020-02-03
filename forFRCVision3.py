@@ -30,6 +30,7 @@ anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (7,7))
 final_anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
 final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -142,7 +143,10 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, final_anti_noise_kernel, iterations = 2)
         #Close to fix any leftover artificial segmentation issues from previous opening
         hsv_frame = cv2.dilate(hsv_frame, final_desegmentation_kernel, iterations = 2)
-        imageog = cv2.erode(hsv_frame, final_desegmentation_kernel, iterations = 2)
+        hsv_frame = cv2.erode(hsv_frame, final_desegmentation_kernel, iterations = 2)
+        #Open to allow watershed to function
+        imagefm = cv2.erode(hsv_frame, final_open_kernel, iterations = 2)
+        imageog = cv2.dilate(imagefm, final_open_kernel)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
@@ -151,8 +155,9 @@ def main(config):
         # pixel to the nearest zero pixel, then find peaks in this
         # distance map
         D = ndimage.distance_transform_edt(imageog)
-        localMax = peak_local_max(D, indices=False, min_distance=8,
-            labels=imageog)
+        Dfm = ndimage.distance_tranform_edt(imagefm)
+        localMax = peak_local_max(Dfm, indices=False, min_distance=8,
+            labels=imagefm)
 
         # perform a connected component analysis on the local peaks,
         # using 8-connectivity, then appy the Watershed algorithm
