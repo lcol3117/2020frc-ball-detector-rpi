@@ -1,3 +1,6 @@
+#Also Known As:
+#Raspberry sees a Lemon
+
 import numpy as np
 from time import time
 import json
@@ -125,8 +128,6 @@ def main(config):
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         imageog = cv2.erode(hsv_frame, anti_logo_kernel)
-        imageogr = cv2.resize(imageog, (60,45))
-        cv2.imshow("Thresh",imageog)
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
         shifted = cv2.pyrMeanShiftFiltering(imageo, 21, 51)
@@ -178,7 +179,7 @@ def main(config):
             ty_entry.setDouble(lgty)
             ta_entry.setDouble(lgtr)
         else:
-            print("No Power Cells in this galaxy!")
+            print("No Lemons in this galaxy!")
             tx_entry.setDouble(-1)
             ty_entry.setDouble(-1)
             ta_entry.setDouble(-1)
