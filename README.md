@@ -18,11 +18,11 @@ Connect everything over ethernet as shown below:
 
 ^^^
 
-|||----INTERNET (ETHERNET ON ROUTER)
+| | |----INTERNET (ETHERNET ON ROUTER)
 
-||
+| |
 
-||--------RASPBERRY PI 4
+| |--------RASPBERRY PI 4
 
 |
 
