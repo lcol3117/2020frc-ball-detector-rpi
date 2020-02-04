@@ -13,6 +13,7 @@ The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION
 
 Instalation Instructions
 Connect everything over ethernet as shown below:
+
 ( SWITCH )<---POWER
 ^   ^   ^
 |   |   |----INTERNET (ETHERNET ON ROUTER)
