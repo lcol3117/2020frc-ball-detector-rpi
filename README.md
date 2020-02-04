@@ -16,13 +16,13 @@ Connect everything over ethernet as shown below:
 
 ( SWITCH )<---POWER
 
-^   ^   ^
+^^^
 
-|   |    |----INTERNET (ETHERNET ON ROUTER)
+|||----INTERNET (ETHERNET ON ROUTER)
 
-|   |
+||
 
-|   |--------RASPBERRY PI 4
+||--------RASPBERRY PI 4
 
 |
 
