@@ -11,8 +11,8 @@ FRCVision is available at wpilibsuite/FRCVision-pi-gen
 NOTE OF WARNING:
 The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION
 
-**Instalation Instructions**
-Connect everything over ethernet as shown below:
+Instalation Instructions
+*Connect everything over ethernet as shown below:
 ----------
 | SWITCH |<---POWER
 ----------
@@ -21,7 +21,7 @@ Connect everything over ethernet as shown below:
 |   |
 |   |--------RASPBERRY PI 4
 |
-|------------COMPUTER
+|------------COMPUTER*
 
 -Windows: Download PuTTY, Open PuTTY, *frcvision.local* ENTER, log in as *pi*, password is *raspberry*
 -UNIX (Mac/Linux): Open Terminal, *ssh pi@frcvision.local* ENTER, password is *raspberry*
