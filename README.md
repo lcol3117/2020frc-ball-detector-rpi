@@ -50,3 +50,9 @@ Power on the pi.
 Now, open a new tab in Firefox at **http://frcvision.local**
 Upload the **forFRCVision6.py** file in the applications tab after clicking writeable and selecting *uploaded python file*
 Navigate to **http://frcvision.local:1182** to see vision
+
+DATA IS SENT OVER NETWORKTABLES; IT IS ABOUT THE LARGEST DETECTED POWER CELL:
+
+pi_tx = x-coord (/160)
+pi_ty = y-coord (/120)
+pi_ta = corresponds to area of target
