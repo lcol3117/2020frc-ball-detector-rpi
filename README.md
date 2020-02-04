@@ -15,11 +15,17 @@ Instalation Instructions
 Connect everything over ethernet as shown below:
 
 ( SWITCH )<---POWER
+
 ^   ^   ^
+
 |   |   |----INTERNET (ETHERNET ON ROUTER)
+
 |   |
+
 |   |--------RASPBERRY PI 4
+
 |
+
 |------------COMPUTER*
 
 -Windows: Download PuTTY, Open PuTTY, *frcvision.local* ENTER, log in as *pi*, password is *raspberry*
