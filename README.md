@@ -61,7 +61,8 @@ Upload the **forFRCVision6.py** file in the applications tab after clicking writ
 Navigate to **http://frcvision.local:1182** to see vision
 
 
-**ADDITIONAL NOTES**
+# ADDITIONAL NOTES
+
 DATA IS SENT OVER NETWORKTABLES; IT IS ABOUT THE LARGEST DETECTED POWER CELL:
 
 pi_tx = x-coord (/160)
