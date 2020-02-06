@@ -31,13 +31,13 @@ SWITCH-------POWER
 
 **2** SSH into Raspberry Pi:
 
-**Windows: **
+**Windows:**
 
 1. Download PuTTY
 2. SSH into the Pi, the default hostname is FRCVision.local
 3. Default log is username `pi` password is `raspberry`
 
-**UNIX (Mac/Linux): **
+**UNIX (Mac/Linux):**
 1. Open Terminal
 2. `ssh pi@frcvision.local`
 3. Default log is username `pi` password is `raspberry`
