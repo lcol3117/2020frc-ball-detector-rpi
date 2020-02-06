@@ -13,7 +13,7 @@ The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION**
 
 # Instalation Instructions:
 
-**1** Connect to install libs
+**1** Connect to install libraries:
 
 Connect everything over ethernet as shown below:
 
@@ -31,16 +31,16 @@ Connect everything over ethernet as shown below:
 
 |------------COMPUTER
 
-**2** SSH into Pi
+**2** SSH into Raspberry Pi
 
 -Windows: Download PuTTY, Open PuTTY, *frcvision.local* ENTER, log in as *pi*, password is *raspberry*
 -UNIX (Mac/Linux): Open Terminal, *ssh pi@frcvision.local* ENTER, password is *raspberry*
 
-**3** Install Libs
+**3** Install Libraries
 
 -right-click to paste the contents of **setup_rpi_libs.sh** into the CLI and press enter
 
-NOTE: Type Y when prompted
+NOTE: Type *Y* when prompted
 
 **4** Test libs
 
@@ -51,7 +51,7 @@ NOTE: Type Y when prompted
 - typing *exit()*
 - If any errors occured, open an issue on this repo
    
-**5** Shutdown Pi
+**5** Shutdown Raspberry Pi
 
 -type *sudo shutdown -h now* and press enter
 
