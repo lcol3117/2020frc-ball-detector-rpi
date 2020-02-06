@@ -38,15 +38,17 @@ Connect everything over ethernet as shown below:
 -right-click to paste the contents of **setup_rpi_libs.sh** into the CLI and press enter
 
 **4**
--test the libs by
-   -typing *python3* and pressing enter
-   -pasting or retyping the contents of **imports_test.py**
-   -typing *exit()*
-   -If any errors occured, open an issue on this repo
+-test the libs:
+
+* typing *python3* and pressing enter
+* pasting or retyping the contents of **imports_test.py**
+- typing *exit()*
+- If any errors occured, open an issue on this repo
    
 **5**
 -type *sudo shutdown -h now* and press enter
--wait for the green light on the back of the pi to stop blinking (~7 secs)
+
+-*wait for the green light on the back of the pi to stop blinking (~7 secs)*
 
 **6**
 Unplug everything and reconnect everything as shown below:
