@@ -1,15 +1,15 @@
 # frc2020-raspberry-sees-lemon
 detect power cells on raspberry pi 4
 
-RASPBERRY SEES A LEMON
+***RASPBERRY SEES LEMON***
 
 For the FRCVision RPi image, please use the forFRCVision%.py
 such that % is the version number
 
-FRCVision is available at wpilibsuite/FRCVision-pi-gen
+*FRCVision is available at wpilibsuite/FRCVision-pi-gen*
 
-NOTE OF WARNING:
-The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION
+**NOTE OF WARNING:
+The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION**
 
 # Instalation Instructions:
 
@@ -79,3 +79,5 @@ DATA IS SENT OVER NETWORKTABLES; IT IS ABOUT THE LARGEST DETECTED POWER CELL:
 pi_tx = x-coord (/160)
 pi_ty = y-coord (/120)
 pi_ta = corresponds to area of target
+
+The table is called *FRCVisionpc*
