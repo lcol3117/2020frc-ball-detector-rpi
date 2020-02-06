@@ -1,83 +1,86 @@
 # frc2020-raspberry-sees-lemon
-detect power cells on raspberry pi 4
+
+Detect Power Cells using a Raspberry Pi for the 2020 FRC game. Uses the FRCVision image for the Pi.
+Tested on Pi 4B, may work on older models but might not run fast enough.
 
 ***RASPBERRY SEES LEMON***
 
-For the FRCVision RPi image, please use the forFRCVision%.py
-such that % is the version number
+For the FRCVision RPi image, please use the forFRCVision<version number>.py file. Currently forFRCVision6.py
 
 *FRCVision is available at wpilibsuite/FRCVision-pi-gen*
 
-**NOTE OF WARNING:
-The non-frcvision versions may not be up-to-date USE THEM WITH CAUTION**
+# Installation Instructions:
 
-# Instalation Instructions:
-
-**1** Connect to install libraries:
+**1** Connect to Pi install libraries:
 
 Connect everything over ethernet as shown below:
 
-( SWITCH )<---POWER
-
-^^^
-
-| | |----INTERNET (ETHERNET ON ROUTER)
-
-| |
-
-| |--------RASPBERRY PI 4
+SWITCH-------POWER
 
 |
 
-|------------COMPUTER
+|-------INTERNET (ETHERNET ON ROUTER)
 
-**2** SSH into Raspberry Pi
+|
 
--Windows: Download PuTTY, Open PuTTY, *frcvision.local* ENTER, log in as *pi*, password is *raspberry*
--UNIX (Mac/Linux): Open Terminal, *ssh pi@frcvision.local* ENTER, password is *raspberry*
+|-------RASPBERRY PI
 
-**3** Install Libraries
+|
 
--right-click to paste the contents of **setup_rpi_libs.sh** into the CLI and press enter
+|-------COMPUTER
 
-NOTE: Type *Y* when prompted
+**2** SSH into Raspberry Pi:
 
-**4** Test libs
+#Windows: 
 
--test the libs by:
+1. Download PuTTY
+2. SSH into the Pi, the default hostname is FRCVision.local
+3. Default log is username `pi` password is `raspberry`
 
-* typing *python3* and pressing enter
-* pasting or retyping the contents of **imports_test.py**
-- typing *exit()*
-- If any errors occured, open an issue on this repo
+#UNIX (Mac/Linux):
+1. Open Terminal
+2. `ssh pi@frcvision.local`
+3. Default log is username `pi` password is `raspberry`
+
+**3** Install Libraries:
+
+1. Copy the contents of **setup_rpi_libs.sh**
+2. Paste (right-click) this into the CLI and press enter
+3. Type `Y` when prompted
+
+**4** Test libraries:
+
+1. type `python3` and press enter
+2. paste or retype the contents of **imports_test.py**
+3. type `exit()` or press CTRL+D
+4. If any errors occured, open an issue on this repo
    
-**5** Shutdown Raspberry Pi
+**5** Shutdown Raspberry Pi:
 
--type *sudo shutdown -h now* and press enter
+1. type *sudo shutdown -h now* and press enter
+2. *wait for the green light on the back of the pi to stop blinking (~7 secs)*
 
--*wait for the green light on the back of the pi to stop blinking (~7 secs)*
-
-**6** Reconnect to upload code
+**6** Reconnect Pi to upload code:
 
 Unplug everything and reconnect everything as shown below:
 
-COMPUTER<-------------->RPI<------------->MS LIFECAM HD-3000
+COMPUTER<-------------->RPI<------------->USB WEBCAM
             ETHERNET             USB
 
-**7** Upload code
+**7** Upload code to the Pi:
 
-Power on the pi. 
-Now, open a new tab in Firefox at **http://frcvision.local**
-Upload the **forFRCVision6.py** file in the applications tab after clicking writeable and selecting *uploaded python file*
-Navigate to **http://frcvision.local:1182** to see vision
+1. Power on the pi. 
+2. Now, open a new tab in Firefox at **http://frcvision.local**
+3. Upload the **forFRCVision6.py** file in the applications tab after clicking writeable and selecting *uploaded python file*
+4. Navigate to **http://frcvision.local:1182** to see vision
 
 
 # ADDITIONAL NOTES
 
-DATA IS SENT OVER NETWORKTABLES; IT IS ABOUT THE LARGEST DETECTED POWER CELL:
+DATA IS SENT OVER **NETWORKTABLES**; IT IS ABOUT THE *LARGEST DETECTED POWER CELL*:
 
-pi_tx = x-coord (/160)
-pi_ty = y-coord (/120)
-pi_ta = corresponds to area of target
+* pi_tx = x-coord (/160)
+* pi_ty = y-coord (/120)
+* pi_ta = corresponds to area of target
 
 The table is called *FRCVisionpc*
