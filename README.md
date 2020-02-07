@@ -64,8 +64,7 @@ SWITCH-------POWER
 
 Unplug everything and reconnect everything as shown below:
 
-COMPUTER<-------------->RPI<------------->USB WEBCAM
-...........ETHERNET..............USB
+COMPUTER<---ETHERNET--->RPI<----USB---->USB WEBCAM
 
 **7** Upload code to the Pi:
 
