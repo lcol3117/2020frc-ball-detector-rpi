@@ -78,8 +78,8 @@ COMPUTER<---ETHERNET--->RPI<----USB---->USB WEBCAM
 
 DATA IS SENT OVER **NETWORKTABLES**; IT IS ABOUT THE *LARGEST DETECTED POWER CELL*:
 
-* pi_tx = x-coord (/160)
-* pi_ty = y-coord (/120)
-* pi_ta = corresponds to area of target
+* `pi_tx` = x-coord (/160)
+* `pi_ty` = y-coord (/120)
+* `pi_ta` = corresponds to area of target
 
-The table is called *FRCVisionpc*
+The table is called `FRCVisionpc`
