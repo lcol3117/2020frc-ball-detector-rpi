@@ -1,0 +1,4 @@
+DATA,NT ENTRY,NT TABLE NAME,RANGE,SPECIAL CASE,RESULT OF SPECIAL CASE
+Target X Coord,pi_tx,FRCVisionpc,0-160,-1,No targets found
+Target Y Coord,pi_ty,FRCVisionpc,0-120,-1,No targets found
+Target Radius,pi_ta,FRCVisionpc,0-120,,
