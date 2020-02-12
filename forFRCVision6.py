@@ -146,7 +146,7 @@ def main(config):
         hsv_frame = cv2.erode(hsv_frame, final_desegmentation_kernel, iterations = 2)
         #Open to allow watershed to function
         imagefm = cv2.erode(hsv_frame, final_open_kernel, iterations = 2)
-        imageog = cv2.dilate(imagefm, final_open_kernel)
+        imageog = cv2.dilate(imagefm, final_open_kernel, iterations = 2)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
