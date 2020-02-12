@@ -192,7 +192,7 @@ def main(config):
             c = max(cnts, key=cv2.contourArea)
             
             #Get contour area
-            area = cv2.contourArea(contour)
+            area = cv2.contourArea(c)
             
             # get a circle enclosing the object
             #NOT THIS WAY ((x, y), r) = cv2.minEnclosingCircle(c)
