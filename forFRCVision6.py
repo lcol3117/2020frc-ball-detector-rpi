@@ -25,7 +25,7 @@ labt = (55, 100, -128, 13, 22, 127) #LAB BAD
 lower_lab = np.array([150,100,170])
 upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
-anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5))
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (9,9))
 final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
