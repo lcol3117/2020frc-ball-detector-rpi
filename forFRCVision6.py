@@ -29,7 +29,7 @@ anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (9,9))
 final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -191,7 +191,7 @@ def main(config):
             #NOT THIS WAY ((x, y), r) = cv2.minEnclosingCircle(c)
             #Only allow circles
             approx = cv2.approxPolyDP(c,0.01*cv2.arcLength(c,True),True)
-            if ((len(approx) > 8) & (len(approx) < 23) & (area > 30) ):
+            if ((len(approx) > 8) & (len(approx) < 23) & (area > 10) ):
                 ((x,y),r) = cv2.minEnclosingCircle(c)
             else: 
                 x, y, r = 0, 0, -1
