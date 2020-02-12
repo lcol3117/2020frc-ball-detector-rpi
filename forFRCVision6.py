@@ -190,9 +190,18 @@ def main(config):
             cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
                 cv2.CHAIN_APPROX_SIMPLE)[-2]
             c = max(cnts, key=cv2.contourArea)
-
-            # draw a circle enclosing the object
-            ((x, y), r) = cv2.minEnclosingCircle(c)
+            
+            #Get contour area
+            area = cv2.contourArea(contour)
+            
+            # get a circle enclosing the object
+            #NOT THIS WAY ((x, y), r) = cv2.minEnclosingCircle(c)
+            #Only allow circles
+            approx = cv2.approxPolyDP(c,0.01*cv2.arcLength(c,True),True)
+            if ((len(approx) > 8) & (len(approx) < 23) & (area > 30) ):
+                ((x,y),r) = cv2.minEnclosingCircle(c)
+            else: 
+                x, y, r = 0, 0, -1
             #Select the new largest circle
             if r>lgtr:
                 lgtx, lgty, lgtr = x, y, r
