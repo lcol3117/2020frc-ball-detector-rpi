@@ -186,13 +186,14 @@ def main(config):
             
             #Get contour area
             area = cv2.contourArea(c)
+            #Get enclosing circle
+            ((x,y),r) = cv2.minEnclosingCircle(c)
             
-            # get a circle enclosing the object
-            #NOT THIS WAY ((x, y), r) = cv2.minEnclosingCircle(c)
             #Only allow circles
-            approx = cv2.approxPolyDP(c,0.01*cv2.arcLength(c,True),True)
-            if ((len(approx) > 8) & (len(approx) < 23) & (area > 10) ):
-                ((x,y),r) = cv2.minEnclosingCircle(c)
+            areaifcircle = (r**2)*(3.141592653589793238462643383)
+            ca_err = abs(area-areaifcircle)
+            if (ca_err < (0.18*areaifcircle)):
+                pass
             else: 
                 x, y, r = 0, 0, -1
             #Select the new largest circle
