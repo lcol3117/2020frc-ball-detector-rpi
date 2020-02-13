@@ -26,11 +26,9 @@ labt = (55, 100, -128, 13, 22, 127) #LAB BAD
 lower_lab = np.array([150,100,170])
 upper_lab = np.array([250,150,200])
 #Define morphological operation kernels
-anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (7,7))
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
-final_desegmentation_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-final_open_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 #edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -135,12 +133,6 @@ def main(config):
         #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
         hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel)
-        #Close to fix any leftover artificial segmentation issues from previous opening
-        hsv_frame = cv2.dilate(hsv_frame, final_desegmentation_kernel, iterations = 2)
-        hsv_frame = cv2.erode(hsv_frame, final_desegmentation_kernel, iterations = 2)
-        #Open to allow watershed to function
-        imagefm = cv2.erode(hsv_frame, final_open_kernel)
-        imageog = cv2.dilate(imagefm, final_open_kernel)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
