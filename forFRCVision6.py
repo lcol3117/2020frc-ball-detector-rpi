@@ -194,7 +194,7 @@ def main(config):
             ca_ideally_pi = area/(r**2)
             ca_err = abs(ca_ideally_pi-math.pi)
             print(ca_err)
-            if (ca_err > 1.1):
+            if (ca_err > 1.25):
                 pass
             else: 
                 x, y, r = 0, 0, -1
