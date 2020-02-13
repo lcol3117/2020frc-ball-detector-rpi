@@ -17,7 +17,7 @@ import imutils
 
 #Define HSV Thresholds
 lower_hsv = np.array([20,30,80])
-upper_hsv = np.array([63,255,255])
+upper_hsv = np.array([30,255,255])
 #Define RGB Thresholds
 lower_rgb = np.array([68,154,0])
 upper_rgb = np.array([255,255,166])
