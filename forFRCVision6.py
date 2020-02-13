@@ -29,7 +29,7 @@ upper_lab = np.array([250,150,200])
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
 anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
-#edt_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+marker_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
 def parseError(str, config_file):
@@ -132,7 +132,9 @@ def main(config):
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
         #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
         hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel)
-        hsv_frame = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel)
+        imageog = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel)
+        #Erode marker proto image to allow watershed
+        imagefm = cv2.erode(imageog, marker_kernel)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
