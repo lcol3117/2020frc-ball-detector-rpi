@@ -194,7 +194,7 @@ def main(config):
             ca_ideally_pi = area/(r**2)
             ca_err = abs(ca_ideally_pi-math.pi)
             print(ca_err)
-            if (ca_err < (0.18*areaifcircle)):
+            if (ca_err < 1):
                 pass
             else: 
                 x, y, r = 0, 0, -1
