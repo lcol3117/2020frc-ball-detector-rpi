@@ -3,6 +3,7 @@
 
 import numpy as np
 from time import time
+import math
 import json
 import sys
 from PIL import Image
@@ -138,8 +139,8 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, final_desegmentation_kernel, iterations = 2)
         hsv_frame = cv2.erode(hsv_frame, final_desegmentation_kernel, iterations = 2)
         #Open to allow watershed to function
-        imagefm = cv2.erode(hsv_frame, final_open_kernel, iterations = 2)
-        imageog = cv2.dilate(imagefm, final_open_kernel, iterations = 2)
+        imagefm = cv2.erode(hsv_frame, final_open_kernel)
+        imageog = cv2.dilate(imagefm, final_open_kernel)
         #Convert Colorspace for watershed
         imageo = cv2.cvtColor(imageog, cv2.COLOR_GRAY2BGR)
         #Watershed image segmentation
@@ -190,8 +191,9 @@ def main(config):
             ((x,y),r) = cv2.minEnclosingCircle(c)
             
             #Only allow circles
-            areaifcircle = (r**2)*(3.141592653589793238462643383)
-            ca_err = abs(area-areaifcircle)
+            ca_ideally_pi = area/(r**2)
+            ca_err = abs(ca_ideally_pi-math.pi)
+            print(ca_err)
             if (ca_err < (0.18*areaifcircle)):
                 pass
             else: 
