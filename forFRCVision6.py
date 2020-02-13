@@ -131,8 +131,8 @@ def main(config):
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
         #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
-        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel)
-        imageog = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel)
+        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel, iterations = 3)
+        imageog = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel, iterations = 3)
         #Erode marker proto image to allow watershed
         imagefm = cv2.erode(imageog, marker_kernel)
         #Convert Colorspace for watershed
