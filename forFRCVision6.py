@@ -16,7 +16,7 @@ from scipy import ndimage
 import imutils
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,30,80])
+lower_hsv = np.array([20,100,80])
 upper_hsv = np.array([30,255,255])
 #Define RGB Thresholds
 lower_rgb = np.array([68,154,0])
