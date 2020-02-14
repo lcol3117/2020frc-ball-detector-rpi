@@ -19,5 +19,5 @@ sudo pip3 install scikit-image
 sudo pip3 install opencv
 sudo pip3 install imutils
 sudo pip3 install pillow
-sudo mount -o remount r /etc/modprobe.d
+sudo mount -o remount r, /etc/modprobe.d
 echo "INFO: Complete. "
