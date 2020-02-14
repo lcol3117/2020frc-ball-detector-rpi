@@ -1,5 +1,6 @@
-#Also Known As:
 #Raspberry sees a Lemon
+#By FRC Team 117: The Steel Dragons. 
+#allderdicerobotics, steeldragons.org
 
 import numpy as np
 from time import time
@@ -16,19 +17,13 @@ from scipy import ndimage
 import imutils
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,70,0])
-upper_hsv = np.array([30,255,170])
-#Define RGB Thresholds
-lower_rgb = np.array([68,154,0])
-upper_rgb = np.array([255,255,166])
-#Define LAB Thresholds
-labt = (55, 100, -128, 13, 22, 127) #LAB BAD
-lower_lab = np.array([150,100,170])
-upper_lab = np.array([250,150,200])
+lower_hsv = np.array([25,40,60])
+upper_hsv = np.array([45,255,255])
+
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
 anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
-anti_lighting_anomaly_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11,11))
+#Define kernel for eroding proto marker image to avoid undersegmentation
 marker_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 
@@ -130,9 +125,6 @@ def main(config):
         #Close to fill in the logo
         hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
         hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
-        #Close to fill in shadows/highlights to improve watershed (lighting anomalies segment true units)
-        hsv_frame = cv2.dilate(hsv_frame, anti_lighting_anomaly_kernel, iterations = 3)
-        imageog = cv2.erode(hsv_frame, anti_lighting_anomaly_kernel, iterations = 3)
         #Erode marker proto image to allow watershed
         imagefm = cv2.erode(imageog, marker_kernel)
         #Convert Colorspace for watershed
@@ -195,15 +187,14 @@ def main(config):
             #Select the new largest circle
             if r>lgtr:
                 lgtx, lgty, lgtr = x, y, r
-
-            cv2.drawMarker(imageo, (int(x), int(y)), (0, 255, 0), markerType=cv2.MARKER_CROSS)
+                
         #Find largest circle if circles exist
         if lgtr != -1:
             print(str([lgtx,lgty,lgtr]))
             tx_entry.setDouble(lgtx)
             ty_entry.setDouble(lgty)
             ta_entry.setDouble(lgtr)
-            cv2.drawMarker(imageo, (int(lgtx),int(lgty)), (255, 0, 0), markerType=cv2.MARKER_CROSS)
+            cv2.drawMarker(imageo, (int(lgtx),int(lgty)), (0, 0, 255), markerType=cv2.MARKER_CROSS)
         else:
             print("No Lemons in this galaxy!")
             tx_entry.setDouble(-1)
