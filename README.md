@@ -3,7 +3,7 @@
 Detect Power Cells using a Raspberry Pi for the 2020 FRC game. Uses the FRCVision image for the Pi.
 Tested on Pi 4B, may work on older models but might not run fast enough.
 
-***BUILD STATUS: IN PROGRESS***
+***BUILD STATUS: BETA***
 
 ***RASPBERRY SEES LEMON WAS DEVELOPED BY FRC TEAM 117***
 
@@ -91,6 +91,6 @@ The table is called `FRCVisionpc`
 
 Build **is not** currently stable
 
-Current file version: **6** (ForFRCVision6.py)
+Current file version: **7** (ForFRCVision7.py)
 
 Upcoming *Release*: **v1.0 BETA** This will occur in file version **7**. 
