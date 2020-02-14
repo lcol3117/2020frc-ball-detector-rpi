@@ -1,5 +1,5 @@
 #Raspberry sees a Lemon
-#By FRC Team 117: The Steel Dragons. 
+#By FRC Team 117: The Steel Dragons.
 #allderdicerobotics, steeldragons.org
 
 import numpy as np
@@ -17,12 +17,12 @@ from scipy import ndimage
 import imutils
 
 #Define HSV Thresholds
-lower_hsv = np.array([25,40,60])
+lower_hsv = np.array([20,100,60])
 upper_hsv = np.array([45,255,255])
 
 #Define morphological operation kernels
-anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
-anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
+anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+anti_logo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4,4))
 #Define kernel for eroding proto marker image to avoid undersegmentation
 marker_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
 #circle_improvement_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
@@ -112,19 +112,20 @@ def main(config):
     cvSink = cs.getVideo()
     img = np.zeros(shape=(HEIGHT, WIDTH, 3), dtype=np.uint8)
     output = cs.putVideo("MLOut", WIDTH, HEIGHT)
-    
-    while True: 
+
+    while True:
         _, frame = cvSink.grabFrame(img)
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         print(hsv_frame[80,60])
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
+        #output.putFrame(hsv_frame_origt)
         #Open to eliminate noise
-        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel)
-        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel)
+        hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 2)
+        hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
         #Close to fill in the logo
-        hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel)
-        hsv_frame = cv2.erode(hsv_frame, anti_logo_kernel)
+        hsv_frame = cv2.dilate(hsv_frame, anti_logo_kernel, iterations = 2)
+        imageog = cv2.erode(hsv_frame, anti_logo_kernel)
         #Erode marker proto image to allow watershed
         imagefm = cv2.erode(imageog, marker_kernel)
         #Convert Colorspace for watershed
@@ -149,7 +150,7 @@ def main(config):
         markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
         labels = watershed(-D, markers, mask=imageog)
         print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
-        
+
         # allocate ram for the largest circle values
         lgtx, lgty, lgtr = -1, -1, -1
 
@@ -170,24 +171,24 @@ def main(config):
             cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
                 cv2.CHAIN_APPROX_SIMPLE)[-2]
             c = max(cnts, key=cv2.contourArea)
-            
+
             #Get contour area
             area = cv2.contourArea(c)
             #Get enclosing circle
             ((x,y),r) = cv2.minEnclosingCircle(c)
-            
+
             #Only allow circles
             ca_ideally_pi = area/(r**2)
             ca_err = abs(ca_ideally_pi-math.pi)
             print(ca_err)
-            if (ca_err > 1.25):
+            if (ca_err < 1.75):
                 pass
-            else: 
+            else:
                 x, y, r = 0, 0, -1
             #Select the new largest circle
             if r>lgtr:
                 lgtx, lgty, lgtr = x, y, r
-                
+
         #Find largest circle if circles exist
         if lgtr != -1:
             print(str([lgtx,lgty,lgtr]))
@@ -200,7 +201,7 @@ def main(config):
             tx_entry.setDouble(-1)
             ty_entry.setDouble(-1)
             ta_entry.setDouble(-1)
-        try: 
+        try:
             print("FPS: {:.1f}".format(1 / (time() - start)))
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
