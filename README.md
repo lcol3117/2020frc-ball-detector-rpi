@@ -85,3 +85,12 @@ DATA IS SENT OVER **NETWORKTABLES**; IT IS ABOUT THE *LARGEST DETECTED POWER CEL
 * `pi_ta` = corresponds to area of target
 
 The table is called `FRCVisionpc`
+
+
+# NOTE ABOUT RELEASES
+
+Build **is not** currently stable
+
+Current file version: **6** (ForFRCVision6.py)
+
+Upcoming *Release*: **v1.0 BETA** This will occur in file version **7**. 
