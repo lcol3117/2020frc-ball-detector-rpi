@@ -89,8 +89,8 @@ The table is called `FRCVisionpc`
 
 # NOTE ABOUT RELEASES
 
-Build **is not** currently stable
+Build **is** currently stable
 
 Current file version: **7** (ForFRCVision7.py)
 
-Upcoming *Release*: **v1.0 BETA** This will occur in file version **7**. 
+Upcoming *Release*: **v1.1 BETA** This will occur in file version **9**. 
