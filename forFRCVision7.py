@@ -119,7 +119,7 @@ def main(config):
         print(hsv_frame[80,60])
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
-        #output.putFrame(hsv_frame_origt)
+        #uncoment for tuning #output.putFrame(hsv_frame_origt)
         #Open to eliminate noise
         hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 2)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
@@ -206,7 +206,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(imageo)
+        output.putFrame(imageo) #comment for tuning
 
 
 if __name__ == '__main__':
