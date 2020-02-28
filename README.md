@@ -5,8 +5,6 @@ Tested on Pi 4B, may work on older models but might not run fast enough.
 
 ***BUILD STATUS: BETA*** 
 
-***THIS IS THE UNSTABLE BRANCH BUGS MAY APPEAR***
-
 ***RASPBERRY SEES LEMON WAS DEVELOPED BY FRC TEAM 117***
 
 For the FRCVision RPi image, please use the forFRCVision<version number>.py file. Currently forFRCVision6.py
