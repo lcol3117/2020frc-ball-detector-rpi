@@ -95,7 +95,7 @@ Current file version: **7** (ForFRCVision7.py)
 
 Upcoming *Release*: **v1.1 BETA** This will occur in file version **9**. 
 
-#FOR TUNING
+# FOR TUNING
 
 1. Run `nano uploaded.py` in the PuTTY shell
 2. Uncomment the line labeled `#uncomment for tuning`
@@ -103,4 +103,7 @@ Upcoming *Release*: **v1.1 BETA** This will occur in file version **9**.
 4. Press Ctrl+X, y, enter to save
 5. Find the `PID` in the corner of the `Vision Status` tab on the web interface at **http://frcvision.local**
 6. Type `kill [PID]` in PuTTY
-7. Run **combined_tf.sh** in PuTTY by typing `./combined_tf.sh`
+7. In PuTTY, run `touch combined_tf.sh` and then `nano combined_tf.sh`
+8. Copy and paste the contents of **combined_tf.sh** into PuTTY
+9. Press Ctrl+X, Y, enter to save
+10. Run **combined_tf.sh** in PuTTY by typing `./combined_tf.sh`
