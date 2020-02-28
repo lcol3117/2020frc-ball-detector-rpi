@@ -3,7 +3,9 @@
 Detect Power Cells using a Raspberry Pi for the 2020 FRC game. Uses the FRCVision image for the Pi.
 Tested on Pi 4B, may work on older models but might not run fast enough.
 
-***BUILD STATUS: BETA***
+***BUILD STATUS: BETA*** 
+
+***THIS IS THE UNSTABLE BRANCH BUGS MAY APPEAR***
 
 ***RASPBERRY SEES LEMON WAS DEVELOPED BY FRC TEAM 117***
 
@@ -94,3 +96,18 @@ Build **is** currently stable
 Current file version: **7** (ForFRCVision7.py)
 
 Upcoming *Release*: **v1.1 BETA** This will occur in file version **9**. 
+
+# FOR TUNING
+
+1. Run `nano uploaded.py` in the PuTTY shell
+2. Uncomment the line labeled `#uncomment for tuning`
+3. Comment the line labeled `#comment for tuning`
+4. Press Ctrl+X, y, enter to save
+5. Find the `PID` in the corner of the `Vision Status` tab on the web interface at **http://frcvision.local**
+6. Type `kill [PID]` in PuTTY
+7. In PuTTY, run `touch combined_tf.sh` and then `nano combined_tf.sh`
+8. Copy and paste the contents of **combined_tf.sh** into PuTTY
+9. Press Ctrl+X, Y, enter to save
+10. Run **combined_tf.sh** in PuTTY by typing `./combined_tf.sh`
+11. Once done, press Ctrl+C to exit tuning fork
+12. Reset the commenting in **uploaded.py** by typing `nano uploaded.py` and then saving as previously described

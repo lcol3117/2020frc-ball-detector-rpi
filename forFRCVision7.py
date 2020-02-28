@@ -17,8 +17,8 @@ from scipy import ndimage
 import imutils
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,100,60])
-upper_hsv = np.array([45,255,255])
+lower_hsv = np.array([20,100,60])#TUNEME1
+upper_hsv = np.array([45,255,255])#TUNEME2
 
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
@@ -119,7 +119,7 @@ def main(config):
         print(hsv_frame[80,60])
         #Threshold HSV Colorspace (Only allow yellow ball color)
         hsv_frame_origt = cv2.inRange(hsv_frame, lower_hsv, upper_hsv)
-        #output.putFrame(hsv_frame_origt)
+        #uncoment for tuning #output.putFrame(hsv_frame_origt)
         #Open to eliminate noise
         hsv_frame = cv2.erode(hsv_frame_origt, anti_noise_kernel, iterations = 2)
         hsv_frame = cv2.dilate(hsv_frame, anti_noise_kernel, iterations = 2)
@@ -206,7 +206,7 @@ def main(config):
         except:
             print("Unable to fetch FPS. (But that was our only hope!)")
         start = time()
-        output.putFrame(imageo)
+        output.putFrame(imageo) #comment for tuning
 
 
 if __name__ == '__main__':
