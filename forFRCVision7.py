@@ -17,8 +17,8 @@ from scipy import ndimage
 import imutils
 
 #Define HSV Thresholds
-lower_hsv = np.array([20,100,60])
-upper_hsv = np.array([45,255,255])
+lower_hsv = np.array([20,100,60])#TUNEME1
+upper_hsv = np.array([45,255,255])#TUNEME2
 
 #Define morphological operation kernels
 anti_noise_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
