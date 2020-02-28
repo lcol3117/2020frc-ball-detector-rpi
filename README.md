@@ -107,3 +107,5 @@ Upcoming *Release*: **v1.1 BETA** This will occur in file version **9**.
 8. Copy and paste the contents of **combined_tf.sh** into PuTTY
 9. Press Ctrl+X, Y, enter to save
 10. Run **combined_tf.sh** in PuTTY by typing `./combined_tf.sh`
+11. Once done, press Ctrl+C to exit tuning fork
+12. Reset the commenting in **uploaded.py** by typing `nano uploaded.py` and then saving as previously described
